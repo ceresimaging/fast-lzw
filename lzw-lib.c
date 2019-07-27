@@ -217,12 +217,9 @@ int lzw_decompress (void (*dst)(int), int (*src)(void))
     unsigned long shifter = 0;
     short *prefixes;
 
-    if ((read_byte = ((*src)())) == EOF || (read_byte & 0xfc))  //sanitize first byte
-        return 1;
-
     // based on the "maxbits" parameter, compute total codes and allocate dictionary storage
 
-    total_codes = 512 << (read_byte & 0x3);
+    total_codes = 512 << 0;
     reverse_buffer = malloc ((total_codes - 256) * sizeof (reverse_buffer [0]));
     prefixes = malloc ((total_codes - 256) * sizeof (prefixes [0]));
     terminators = malloc ((total_codes - 256) * sizeof (terminators [0]));
