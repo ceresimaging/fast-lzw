@@ -1,0 +1,26 @@
+{
+  "name": "fast-lzw",
+  "version": "0.0.1",
+  "description": "Extremely fast LZW decoder for Javascript using WASM",
+  "main": "fast-lzw.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ceresimaging/fast-lzw.git"
+  },
+  "keywords": [
+    "Javascript",
+    "Performance",
+    "LZW",
+    "Decompress",
+    "WASM"
+  ],
+  "author": "Seth Nickell <seth@ceresimaging.net>",
+  "license": "LGPL-2.1-only",
+  "bugs": {
+    "url": "https://github.com/ceresimaging/fast-lzw/issues"
+  },
+  "homepage": "https://github.com/ceresimaging/fast-lzw#readme"
+}
