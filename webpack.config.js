@@ -1,13 +1,16 @@
 const path = require('path')
 const ThreadsPlugin = require('threads-plugin')
+const webpack = require('webpack')
 
 module.exports = {
   entry: './index.js',
+
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'index.js',
     libraryTarget: 'commonjs2'
   },
+  mode: "production",
   module: {
     rules: [
       {
@@ -24,6 +27,11 @@ module.exports = {
     ]
   },
   plugins: [
-    new ThreadsPlugin()
+    new ThreadsPlugin(),
+    // Emscripten outputs a require('fs') line for ES6 modules
+    // which breaks browser compilation
+    new webpack.IgnorePlugin({
+      resourceRegExp: /^fs$/
+    })
   ]
 }

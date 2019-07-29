@@ -1,16 +1,21 @@
 import { decompress } from './src/'
-import { spawn, Thread, Worker } from 'threads'
+import { spawn, Pool, Worker } from 'threads'
 
 class LZW {
-    constructor (numWorkers) {
-        this.pool = spawn(new Worker("./src"), numWorkers)
-    }
-    async decompress (typedArray) {
-        return (await this.pool).decompress(typedArray)
-    }
+  constructor (numWorkers) {
+    this.pool = Pool(
+      () => spawn(new Worker("./src"), numWorkers)
+    )
+  }
+  async decompress (typedArray) {
+    const pool = await this.pool
+    return await pool.queue(
+      async worker => worker.decompress(typedArray)
+    )
+  }
 }
-
+  
 export {
-    decompress,
-    LZW
+  decompress,
+  LZW
 }

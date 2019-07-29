@@ -2,7 +2,7 @@
   "name": "fast-lzw",
   "version": "0.0.1",
   "description": "Extremely fast LZW decoder for Javascript using WASM",
-  "main": "fast-lzw.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "cd src; make; cd ..; webpack",
     "clean": "cd src; make clean; cd ..; "

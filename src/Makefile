@@ -15,13 +15,14 @@ lzw-wasm.js: wrapper.c Makefile
 		-O3 \
 		--closure 1 \
 		-s TOTAL_MEMORY=10MB \
+		-s FILESYSTEM=0 \
+		 -s ALLOW_MEMORY_GROWTH=1 \
 		-s WASM=1 \
 		-s SINGLE_FILE=1 \
 		-s MODULARIZE=1 \
 		-s EXPORT_ES6=1 \
-		-s EXPORT_ALL \
 		-s 'EXTRA_EXPORTED_RUNTIME_METHODS=["ccall", "cwrap"]' \
-		-s NO_EXIT_RUNTIME=1
+		-s NO_EXIT_RUNTIME=1 \
 	
 clean:
-	rm lzw.js
+	rm lzw-wasm.js
