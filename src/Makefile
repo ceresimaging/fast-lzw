@@ -1,11 +1,10 @@
 
 EMCC ?= emcc
 EXPORTED_FUNCTIONS = "[\
-  '_lzwDecompress',\
-	'_lzwDecompressFFMPEG'\
+	'_lzwDecompress'\
 ]"
 
-lzw.js: wrapper.c lzw-lib.c lzw-lib.h lzwfilter.c
+lzw.js: wrapper.c
 	${EMCC} *c \
 		 ffmpeg/*c ffmpeg/libavutil/log.c ffmpeg/libavutil/mem.c ffmpeg/libavutil/bprint.c \
 		-I . -I ffmpeg \
