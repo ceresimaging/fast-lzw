@@ -4,16 +4,21 @@ EXPORTED_FUNCTIONS = "[\
 	'_lzwDecompress'\
 ]"
 
-lzw.js: wrapper.c
+lzw-wasm.js: wrapper.c Makefile
 	${EMCC} *c \
 		 ffmpeg/*c ffmpeg/libavutil/log.c ffmpeg/libavutil/mem.c ffmpeg/libavutil/bprint.c \
+		-w \
 		-I . -I ffmpeg \
-		-o lzw.js \
+		-o lzw-wasm.js \
 		-s EXPORTED_FUNCTIONS=$(EXPORTED_FUNCTIONS) \
-		-s TOTAL_MEMORY=1024MB \
+		-s STRICT=1 \
+		-O3 \
+		--closure 1 \
+		-s TOTAL_MEMORY=10MB \
 		-s WASM=1 \
 		-s SINGLE_FILE=1 \
 		-s MODULARIZE=1 \
+		-s EXPORT_ES6=1 \
 		-s EXPORT_ALL \
 		-s 'EXTRA_EXPORTED_RUNTIME_METHODS=["ccall", "cwrap"]' \
 		-s NO_EXIT_RUNTIME=1
