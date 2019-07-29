@@ -1,5 +1,5 @@
 import { decompress } from './src/'
-import { spawn, Pool, Worker } from 'threads'
+import { spawn, Pool, Worker, Transfer } from 'threads'
 
 class LZW {
   constructor (numWorkers) {
@@ -10,7 +10,9 @@ class LZW {
   async decompress (typedArray) {
     const pool = await this.pool
     return await pool.queue(
-      async worker => worker.decompress(typedArray)
+      async worker => worker.decompress(
+        Transfer(typedArray)
+      )
     )
   }
 }
