@@ -1,4 +1,5 @@
-var path = require('path');
+const path = require('path')
+const ThreadsPlugin = require('threads-plugin')
 
 module.exports = {
   entry: './index.js',
@@ -12,7 +13,7 @@ module.exports = {
       {
         test: /\.js$/,
         include: path.resolve(__dirname, 'src'),
-        exclude: /(node_modules|build)/,
+        exclude: /(node_modules|dist)/,
         use: {
           loader: 'babel-loader',
           options: {
@@ -21,5 +22,8 @@ module.exports = {
         }
       }
     ]
-  }
-};
+  },
+  plugins: [
+    new ThreadsPlugin()
+  ]
+}

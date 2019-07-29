@@ -1,4 +1,5 @@
 import lzwWASM from './lzw-wasm'
+import { expose, Transfer } from "threads/worker"
 
 const Module = lzwWASM()
 
@@ -24,3 +25,9 @@ async function decompress(typedArray) {
   
   return out
 }
+
+expose({
+  decompress: (_) => Transfer(decompress(_))
+})
+
+export { decompress }
