@@ -9,9 +9,7 @@ const moduleReady = new Promise(function (resolve, reject) {
 })
 loadModule(Module)
 
-async function decompress(typedArray) {
-  await moduleReady
-  
+async function _decompress(typedArray) {
   const src = Module._malloc(typedArray.byteLength)
   const heapBytes = new Uint8Array(Module.HEAPU8.buffer, src, typedArray.byteLength)
   heapBytes.set(new Uint8Array(typedArray.buffer, typedArray.byteOffset, typedArray.byteLength))
@@ -32,4 +30,16 @@ async function decompress(typedArray) {
   return response
 }
 
-export { decompress }
+async function decompress(typedArray) {
+  await moduleReady
+  return _decompress(typedArray)
+}
+
+async function decompressAll(typedArrays) {
+  await moduleReady
+  return await Promise.all(
+    typedArrays.map(typedArray => _decompress(typedArray))
+  )
+}
+
+export { decompress, decompressAll }
