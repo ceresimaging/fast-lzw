@@ -1,9 +1,9 @@
 import { expose, Transfer } from 'threads/worker'
-import { decompress } from './index'
+import { decompressAll } from './index'
 
 expose({
-  decompress: async (_) => {
-    const typedArray = await decompress(_)
-    return Transfer(typedArray, [typedArray.buffer])
-  }
+  decompressAll: async (_) => {
+    const typedArrays = await decompressAll(_)
+    return Transfer(typedArrays, typedArrays.map(typedArray => typedArray.buffer))
+  },
 })

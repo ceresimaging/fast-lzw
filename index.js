@@ -1,8 +1,6 @@
 import { decompress, decompressAll } from './src/'
 import { spawn, Pool, Worker, Transfer } from 'threads'
 
-
-
 class LZW {
   constructor (numWorkers) {
     this.usingWorkers = numWorkers > 0
@@ -29,12 +27,13 @@ class LZW {
   }
   async decompress(typedArrays) {
     if (!this.pool) {
-      return await(decompressAll(data))
+      console.log("not using pool")
+      return await decompressAll(typedArrays)
     } else {
       const data = this.prepareDataForTransfer(typedArrays)
       const pool = await this.pool
       return await pool.queue(
-        async worker => await worker.decompress(data)
+        async worker => await worker.decompressAll(data)
       )
     }
   }
