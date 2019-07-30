@@ -16,6 +16,13 @@
       "problemMatcher": [
         "$eslint-compact"
       ]
+    },
+    {
+      "type": "npm",
+      "script": "clean",
+      "problemMatcher": [
+        "$eslint-compact"
+      ]
     }
   ]
 }
