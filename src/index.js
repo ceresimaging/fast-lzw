@@ -1,10 +1,17 @@
-import lzwWASM from './lzw-wasm.js'
-import { expose, Transfer } from "threads/worker"
+import loadModule from './lzw-wasm.js'
+import { expose, Transfer } from 'threads/worker'
 
-const Module = lzwWASM()
+let Module
+const moduleReady = new Promise(function (resolve, reject) {
+  Module = loadModule({
+    onAbort: what => reject(what),
+    onRuntimeInitialized: _ => resolve(true)
+  })
+  Module.ready = moduleReady
+})
 
 async function decompress(typedArray) {
-  await Module
+  await Module.ready
   
   const src = Module._malloc(typedArray.byteLength)
   const heapBytes = new Uint8Array(Module.HEAPU8.buffer, src, typedArray.byteLength)

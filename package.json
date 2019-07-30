@@ -4,6 +4,7 @@
   "description": "Extremely fast LZW decoder for Javascript using WASM",
   "main": "dist/index.js",
   "scripts": {
+    "watch": "webpack --watch",
     "build": "cd src; make; cd ..; webpack",
     "clean": "cd src; make clean; cd ..; "
   },
