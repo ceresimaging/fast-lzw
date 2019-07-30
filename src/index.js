@@ -29,7 +29,7 @@ async function decompress(typedArray) {
   Module._free(outPtr)
   Module._free(outSizePtr)
   
-  return out
+  return response
 }
 
 export { decompress }
