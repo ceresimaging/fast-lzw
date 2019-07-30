@@ -3,11 +3,20 @@ import { spawn, Pool, Worker, Transfer } from 'threads'
 
 class LZW {
   constructor (numWorkers) {
-    this.pool = Pool(
-      () => spawn(new Worker("./src/worker"), numWorkers)
-    )
+    this.usingWorkers = numWorkers > 0
+    if (this.usingWorkers > 0) {
+      this.pool = Pool(
+        () => spawn(new Worker("./src/worker"), numWorkers)
+      )  
+    } else {
+      this.pool = null
+    }
   }
   async decompress (typedArray) {
+    if (!this.pool) {
+      return await(decompress(typedArray))
+    }
+    
     const pool = await this.pool
     
     let data
