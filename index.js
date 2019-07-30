@@ -2,7 +2,8 @@ import { decompress, decompressAll } from './src/'
 import { spawn, Pool, Worker, Transfer } from 'threads'
 
 class LZW {
-  constructor (numWorkers) {
+  constructor (numWorkers, outputBuffer) {
+    this.outputBuffer= outputBuffer
     this.usingWorkers = numWorkers > 0
     if (this.usingWorkers > 0) {
       this.pool = Pool(
@@ -13,22 +14,26 @@ class LZW {
     }
   }
   prepareDataForTransfer (typedArrays) {
-    return typedArrays.map(function (typedArray) {
-      if (typedArray.buffer instanceof SharedArrayBuffer) {
-        return typedArray
-      } else {
-        // If this isn't a shared array buffer underneath, it
-        // might be MUCH larger than the typedArray, so lets
-        // do a performance tradeoff and make a copy
-        const copy = typedArray.slice()
-        return Transfer(copy, [copy.buffer])
-      }
-    })
+    const transfers = []
+    return Transfer(
+      typedArrays.map(function (typedArray) {
+        if (typedArray.buffer instanceof SharedArrayBuffer) {
+          return typedArray
+        } else {
+          if (typedArray.byteLength != typedArray.buffer.byteLength) {
+            // If the typedArray doesn't span the buffer, lets play it safe and make a copy
+            typedArray = typedArray.slice()
+          }
+          transfers.push(typedArray.buffer)
+          return typedArray
+        }
+      }), 
+      transfers
+    )
   }
   async decompress(typedArrays) {
     if (!this.pool) {
-      console.log("not using pool")
-      return await decompressAll(typedArrays)
+      return await decompressAll(typedArrays, this.outputBuffer)
     } else {
       const data = this.prepareDataForTransfer(typedArrays)
       const pool = await this.pool
