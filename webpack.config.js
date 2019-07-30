@@ -27,7 +27,9 @@ module.exports = {
     ]
   },
   plugins: [
-    new ThreadsPlugin(),
+    new ThreadsPlugin({
+      globalObject: 'self'
+    }),
     // Emscripten outputs a require('fs') line for ES6 modules
     // which breaks browser compilation
     new webpack.IgnorePlugin({

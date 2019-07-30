@@ -1,17 +1,16 @@
 import loadModule from './lzw-wasm.js'
-import { expose, Transfer } from 'threads/worker'
 
 let Module
 const moduleReady = new Promise(function (resolve, reject) {
-  Module = loadModule({
+  Module = {
     onAbort: what => reject(what),
     onRuntimeInitialized: _ => resolve(true)
-  })
-  Module.ready = moduleReady
+  }
 })
+loadModule(Module)
 
 async function decompress(typedArray) {
-  await Module.ready
+  await moduleReady
   
   const src = Module._malloc(typedArray.byteLength)
   const heapBytes = new Uint8Array(Module.HEAPU8.buffer, src, typedArray.byteLength)
@@ -32,9 +31,5 @@ async function decompress(typedArray) {
   
   return out
 }
-
-expose({
-  decompress: (_) => Transfer(decompress(_))
-})
 
 export { decompress }

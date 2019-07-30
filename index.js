@@ -4,7 +4,7 @@ import { spawn, Pool, Worker, Transfer } from 'threads'
 class LZW {
   constructor (numWorkers) {
     this.pool = Pool(
-      () => spawn(new Worker("./src"), numWorkers)
+      () => spawn(new Worker("./src/worker"), numWorkers)
     )
   }
   async decompress (typedArray) {
