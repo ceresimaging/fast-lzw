@@ -1,7 +1,7 @@
 # fast-lzw
 Extremely fast LZW decompression for JavaScript using WASM extracted from FFmpeg. Can decompress upwards of ~100MB/s.
 
-```
+```javascript
 import { LZW } from 'fast-lzw'
 const WORKER_POOL_SIZE = 4
 
