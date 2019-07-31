@@ -1,13 +1,19 @@
-import loadModule from './lzw-wasm.js'
-
 let Module
-const moduleReady = new Promise(function (resolve, reject) {
-  Module = {
-    onAbort: what => reject(what),
-    onRuntimeInitialized: _ => resolve(true)
+async function getModule() {
+  const loadModule = await import('./lzw-wasm.js')
+  if (!Module) {
+    const moduleReady = new Promise(function (resolve, reject) {
+      Module = {
+        onAbort: what => reject(what),
+        onRuntimeInitialized: _ => resolve(true)
+      }
+    })
+    loadModule(Module)
+    await moduleReady
   }
-})
-loadModule(Module)
+  return Module
+}
+
 
 function _decompress(typedArray) {
   const src = Module._malloc(typedArray.byteLength)
@@ -31,12 +37,12 @@ function _decompress(typedArray) {
 }
 
 async function decompress(typedArray) {
-  await moduleReady
+  await getModule()
   return _decompress(typedArray)
 }
 
 async function decompressAll(typedArrays) {
-  await moduleReady
+  await getModule()
   return typedArrays.map(typedArray => _decompress(typedArray))
 }
 

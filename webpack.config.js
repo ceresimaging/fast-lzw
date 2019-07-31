@@ -7,7 +7,10 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'index.js',
-    libraryTarget: 'commonjs2'
+    libraryTarget: 'umd',
+    library: 'fast-lzw',
+    umdNamedDefine: true,
+    chunkFilename: '[name].bundle.js'
   },
   mode: "production",
   module: {
