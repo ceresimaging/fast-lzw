@@ -4,7 +4,6 @@ const webpack = require('webpack')
 
 module.exports = {
   entry: './index.js',
-
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'index.js',
@@ -29,11 +28,11 @@ module.exports = {
   plugins: [
     new ThreadsPlugin({
       globalObject: 'self'
-    }),
-    // Emscripten outputs a require('fs') line for ES6 modules
-    // which breaks browser compilation
-    new webpack.IgnorePlugin({
-      resourceRegExp: /^fs$/
     })
-  ]
+  ],
+  resolve: {
+    alias: {
+      'fs$': path.resolve(__dirname, 'src/fs-shim.js')
+    }
+  }
 }

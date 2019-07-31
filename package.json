@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "description": "Extremely fast LZW decoder for Javascript using WASM",
   "main": "dist/index.js",
-  "module": "./index.js",
   "scripts": {
     "watch": "webpack --watch",
     "build": "cd src; make; cd ..; webpack",
@@ -28,7 +27,6 @@
   "homepage": "https://github.com/ceresimaging/fast-lzw#readme",
   "devDependencies": {
     "@babel/core": "^7.5.5",
-    "@babel/plugin-syntax-import-meta": "^7.2.0",
     "@babel/preset-env": "^7.5.5",
     "babel-loader": "^8.0.6",
     "threads-plugin": "^1.0.0",
