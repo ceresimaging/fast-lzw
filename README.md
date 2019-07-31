@@ -1,5 +1,5 @@
 # fast-lzw
-Extremely fast LZW decompression for JavaScript using WASM extracted from FFmpeg. Can decompress upwards of ~100MB/s.
+Extremely fast LZW decompression for JavaScript using WASM extracted from FFmpeg. Can decompress upwards of ~100MB/s. Used by https://github.com/ceresimaging/fast-geotiff . 
 
 ```
 import { LZW } from 'fast-lzw'
