@@ -36,10 +36,7 @@
   "dependencies": {
     "threads": "^1.0.0-beta.3"
   },
-  {
-    "files": [
-      "dist/",
-      "LICENSE.md"
-    ]
-  }
+  "files": [
+    "dist/"
+  ]
 }
