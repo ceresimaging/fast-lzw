@@ -1,6 +1,6 @@
 {
   "name": "fast-lzw",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "description": "Extremely fast LZW decoder for Javascript using WASM",
   "main": "dist/index.js",
   "scripts": {
@@ -35,5 +35,11 @@
   },
   "dependencies": {
     "threads": "^1.0.0-beta.3"
+  },
+  {
+    "files": [
+      "dist/",
+      "LICENSE.md"
+    ]
   }
 }
