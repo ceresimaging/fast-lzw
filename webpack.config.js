@@ -21,13 +21,22 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             presets: [
-              '@babel/preset-env',
+              [
+                '@babel/preset-env', {
+                  useBuiltIns: 'usage',
+                  targets: {
+                    chrome: "75",
+                    firefox: "67"
+                  },
+                  corejs: 3
+                }  
+              ]
             ]
           }
         }
       },
       {
-        test: /^\.\/src\/worker\.js$/,
+        test: /src\/worker\.js$/,
         use: { 
           loader: 'worker-loader',
           options: { inline: true, fallback: false }
@@ -35,9 +44,6 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-
-  ],
   resolve: {
     alias: {
       'fs$': path.resolve(__dirname, 'src/fs-shim.js')

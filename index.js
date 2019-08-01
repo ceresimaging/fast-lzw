@@ -8,7 +8,7 @@ class LZW {
     this.usingWorkers = numWorkers > 0
     if (this.usingWorkers > 0) {
       this.pool = Pool(
-        () => spawn(new Worker("./src/worker"), numWorkers)
+        () => spawn(new Worker(), numWorkers)
       )  
     } else {
       this.pool = null
@@ -38,10 +38,8 @@ class LZW {
     } else {
       const data = this.prepareDataForTransfer(typedArrays)
       const pool = await this.pool
-      console.log("blob dog")
-      window.pool = pool
       return await pool.queue(
-        async worker => { console.log(worker); await worker.decompressAll(data) }
+        async worker => await worker.decompressAll(data)
       )
     }
   }

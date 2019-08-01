@@ -1,6 +1,6 @@
 {
   "name": "fast-lzw",
-  "version": "1.0.0-alpha.7",
+  "version": "1.0.0-alpha.8",
   "description": "Extremely fast LZW decoder for Javascript using WASM",
   "main": "dist/index.js",
   "scripts": {
@@ -29,12 +29,12 @@
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "babel-loader": "^8.0.6",
-    "url-loader": "^2.1.0",
     "webpack": "^4.38.0",
     "webpack-cli": "^3.3.6",
     "worker-loader": "^2.0.0"
   },
   "dependencies": {
+    "core-js": "^3.1.4",
     "threads": "^1.0.0-beta.3"
   },
   "files": [
