@@ -1,6 +1,8 @@
+import loadModule from './lzw-wasm'
+
 let Module
 async function getModule() {
-  const loadModule = await import('./lzw-wasm.js')
+  //const loadModule = (await import('./lzw-wasm.js')).default
   if (!Module) {
     const moduleReady = new Promise(function (resolve, reject) {
       Module = {
@@ -13,7 +15,6 @@ async function getModule() {
   }
   return Module
 }
-
 
 function _decompress(typedArray) {
   const src = Module._malloc(typedArray.byteLength)

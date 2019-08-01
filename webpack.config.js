@@ -1,5 +1,4 @@
 const path = require('path')
-const ThreadsPlugin = require('threads-plugin')
 const webpack = require('webpack')
 
 module.exports = {
@@ -10,7 +9,6 @@ module.exports = {
     libraryTarget: 'umd',
     library: 'fast-lzw',
     umdNamedDefine: true,
-    chunkFilename: '[name].bundle.js'
   },
   mode: "production",
   module: {
@@ -22,16 +20,23 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/env'],
+            presets: [
+              '@babel/preset-env',
+            ]
           }
+        }
+      },
+      {
+        test: /^\.\/src\/worker\.js$/,
+        use: { 
+          loader: 'worker-loader',
+          options: { inline: true, fallback: false }
         }
       }
     ]
   },
   plugins: [
-    new ThreadsPlugin({
-      globalObject: 'self'
-    })
+
   ],
   resolve: {
     alias: {

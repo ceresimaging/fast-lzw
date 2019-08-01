@@ -1,5 +1,6 @@
 import { decompress, decompressAll } from './src/'
-import { spawn, Pool, Worker, Transfer } from 'threads'
+import { spawn, Pool, Transfer } from 'threads'
+import Worker from './src/worker.js'
 
 class LZW {
   constructor (numWorkers, outputBuffer) {
@@ -37,8 +38,10 @@ class LZW {
     } else {
       const data = this.prepareDataForTransfer(typedArrays)
       const pool = await this.pool
+      console.log("blob dog")
+      window.pool = pool
       return await pool.queue(
-        async worker => await worker.decompressAll(data)
+        async worker => { console.log(worker); await worker.decompressAll(data) }
       )
     }
   }
