@@ -13,7 +13,9 @@ async function getModule() {
     loadModule(Module)
     await moduleReady
   }
-  return Module
+
+  // can't return Module because of its broken promise-esque .then implementation :-(
+  return true
 }
 
 function _decompress(typedArray) {
@@ -44,7 +46,10 @@ async function decompress(typedArray) {
 
 async function decompressAll(typedArrays) {
   await getModule()
-  return typedArrays.map(typedArray => _decompress(typedArray))
+  console.log("Got module")
+  const decompressed = typedArrays.map(typedArray => _decompress(typedArray))
+  console.log("Returning decompressed")
+  return decompressed
 }
 
 export { decompress, decompressAll }
