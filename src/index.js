@@ -46,9 +46,7 @@ async function decompress(typedArray) {
 
 async function decompressAll(typedArrays) {
   await getModule()
-  console.log("Got module")
   const decompressed = typedArrays.map(typedArray => _decompress(typedArray))
-  console.log("Returning decompressed")
   return decompressed
 }
 
