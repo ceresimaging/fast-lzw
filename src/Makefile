@@ -14,7 +14,7 @@ lzw-wasm.js: wrapper.c Makefile
 		-s STRICT=1 \
 		-O3 \
 		--closure 1 \
-		-s TOTAL_MEMORY=50MB \
+		-s TOTAL_MEMORY=200MB \
 		-s FILESYSTEM=0 \
 		 -s ALLOW_MEMORY_GROWTH=1 \
 		-s WASM=1 \
